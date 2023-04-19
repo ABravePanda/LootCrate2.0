@@ -9,7 +9,6 @@ import com.tompkins_development.lootcrate.utils.StringUtils;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
-import java.io.IOException;
 import java.lang.reflect.Field;
 import java.util.List;
 
