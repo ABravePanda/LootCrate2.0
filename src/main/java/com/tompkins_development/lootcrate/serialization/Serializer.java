@@ -3,14 +3,10 @@ package com.tompkins_development.lootcrate.serialization;
 import com.tompkins_development.lootcrate.Conts;
 import com.tompkins_development.lootcrate.LootCrate;
 import com.tompkins_development.lootcrate.objects.Crate;
-import com.tompkins_development.lootcrate.objects.Reward;
+
 import com.tompkins_development.lootcrate.utils.StringUtils;
 
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileWriter;
-import java.lang.reflect.Field;
-import java.util.List;
+import java.io.*;
 
 public class Serializer {
 
@@ -34,41 +30,27 @@ public class Serializer {
 
     public void save(Crate crate) throws Exception {
         File path = new File(cratesDirectory + File.separator + StringUtils.strip(crate.getTitle()) + Conts.CRATE_EXTENSION);
-        BufferedWriter writer = new BufferedWriter(new FileWriter(path));
-        Field[] fields = Crate.class.getDeclaredFields();
-        for(Field field : fields) {
-            String textToWrite = "";
-            System.out.println(field.getName().toLowerCase());
-            switch (field.getName().toLowerCase()) {
-                case "id":
-                    textToWrite = "id: " + crate.getId();
-                    break;
-                case "title":
-                    textToWrite = "title: " + crate.getTitle();
-                    break;
-                case "rewards":
-                    textToWrite = rewards(crate.getRewards());
-                    break;
-                default:
-                    textToWrite = field.getName() + ": None";
-            }
-            textToWrite+="\n";
-            writer.write(textToWrite);
-        }
-        writer.close();
+        FileOutputStream f = new FileOutputStream(path);
+        ObjectOutputStream o = new ObjectOutputStream(f);
+
+        o.writeObject(crate);
+
+        o.close();
+        f.close();
     }
 
-    private String rewards(List<Reward> rewardList) {
-        String returnString = "rewards: \n";
+    public void load(String s) throws Exception {
+        File path = new File(cratesDirectory + File.separator + "blue_crate" + Conts.CRATE_EXTENSION);
+        FileInputStream f = new FileInputStream(path);
+        ObjectInputStream o = new ObjectInputStream(f);
 
-        int index = 0;
-        for(Reward reward : rewardList) {
-            index++;
-            returnString+="\t- " + reward.getId();
-            if(index != rewardList.size()) returnString+="\n";
-        }
-        return returnString;
+        Crate crate = (Crate) o.readObject();
+        System.out.println(crate);
+
+        o.close();
+        f.close();
     }
+
 
 
 

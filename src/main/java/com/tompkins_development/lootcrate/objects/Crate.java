@@ -3,11 +3,12 @@ package com.tompkins_development.lootcrate.objects;
 import com.tompkins_development.lootcrate.Conts;
 import com.tompkins_development.lootcrate.utils.NumberUtils;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class Crate {
+public class Crate implements Serializable {
 
     private int id;
     private String title;
@@ -79,5 +80,16 @@ public class Crate {
         if(settings == null)
             settings = new ArrayList<>();
         this.settings = settings;
+    }
+
+    @Override
+    public String toString() {
+        return "Crate{" +
+                "id=" + id +
+                ", title='" + title + '\'' +
+                ", key=" + key +
+                ", rewards=" + rewards +
+                ", settings=" + settings +
+                '}';
     }
 }

@@ -10,7 +10,8 @@ public class StringUtils {
                 .replaceAll("[\\\\/:*?\"<>|]", "")
                 .replace(" ", "_")
                 .toLowerCase();
-        System.out.println(newString);
+        newString = ChatColor.translateAlternateColorCodes('&', newString);
+        newString = ChatColor.stripColor(newString);
         return newString;
     }
 

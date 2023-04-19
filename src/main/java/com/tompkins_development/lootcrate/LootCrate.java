@@ -30,6 +30,7 @@ public class LootCrate extends JavaPlugin {
         Crate crate = new Crate(-1, "&6&lBlue Crate", null, rewardList, null);
         try {
             serializer.save(crate);
+            serializer.load("s");
         } catch (Exception e) {
             e.printStackTrace();
         }
